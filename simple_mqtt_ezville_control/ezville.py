@@ -309,8 +309,10 @@ def ezville_loop(config):
  
 
     # MQTT 통신 연결 해제 Callback
-    def on_disconnect(client, userdata, rc):
+    def on_disconnect(client, userdata, rc, properties):
         log('INFO: MQTT 연결 해제')
+        if rc != 0:
+            log(f'[ERROR] Disconnection reason: {rc}')
         pass
 
 
@@ -976,7 +978,7 @@ def ezville_loop(config):
 
         
     # MQTT 통신
-    mqtt_client = mqtt.Client('mqtt-ezville')
+    mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,client_id)
     mqtt_client.username_pw_set(config['mqtt_id'], config['mqtt_password'])
     mqtt_client.on_connect = on_connect
     mqtt_client.on_disconnect = on_disconnect
