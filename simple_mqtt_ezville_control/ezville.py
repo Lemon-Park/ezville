@@ -978,7 +978,7 @@ def ezville_loop(config):
 
         
     # MQTT 통신
-    mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,client_id)
+    mqtt_client = mqtt.Client(client_id, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
     mqtt_client.username_pw_set(config['mqtt_id'], config['mqtt_password'])
     mqtt_client.on_connect = on_connect
     mqtt_client.on_disconnect = on_disconnect
